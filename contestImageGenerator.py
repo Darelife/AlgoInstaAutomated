@@ -64,7 +64,7 @@ class ContestImageGenerator:
         return sorted([entry for entry in data if entry[2] != 0], key=lambda x: x[2])[:min(5, len(data))]
 
     def truncate(self, text):
-        return text if len(text) <= 20 else text[:17] + "..."
+        return text if len(text) <= 17 else text[:14] + "..."
 
     def setupImage(self):
         self.background = Image.open(f"./BGCL/{self.imageList[self.imageSelected]}")
