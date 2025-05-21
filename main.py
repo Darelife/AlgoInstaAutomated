@@ -80,7 +80,7 @@ draw = ImageDraw.Draw(background)
 # Load font
 font_path = "./fonts/Montserrat-Light.ttf"
 title_font = ImageFont.truetype(font_path, 123)
-line_font = ImageFont.truetype(font_path, 50)
+line_font = ImageFont.truetype(font_path, 52)
 
 # Title
 # draw.text((width // 2, 100), "Top 5 Coders", font=title_font, fill=textColour[imageSelected], anchor="mm")
@@ -94,7 +94,7 @@ draw.text((width//2, 950), descText, font = title_font, fill = textColour[imageS
 
 # Table start
 start_y = 1250
-gap = 100
+gap = 110
 x_name = 120
 x_handle = 700
 x_points = 1430
