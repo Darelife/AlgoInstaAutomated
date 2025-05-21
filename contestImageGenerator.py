@@ -3,13 +3,13 @@ import re
 import requests
 
 class ContestImageGenerator:
-    def __init__(self, contestId, descText, imageSelected, overrideContestName=False, overrideText=""):
+    def __init__(self, contestId, descText, imageSelected, regex=r"^(2023|2024|2022).{9}$", overrideContestName=False, overrideText=""):
         self.imageList = ["dark.png", "brown.png", "purple.png", "blue.png"]
         self.textColour = ["#e1e1de", "#ffe5c0", "#e4caf4", "#cbdcfd"]
-        self.regex = r"^(2023|2024|2022).{9}$"
+        self.regex = regex
         self.contestId = contestId
         self.descText = descText
-        self.imageSelected = imageSelected % 4
+        self.imageSelected = imageSelected % len(self.textColour)
         self.overrideContestName = overrideContestName
         self.overrideText = overrideText
         self.background = None

@@ -9,6 +9,7 @@ if __name__ == "__main__":
         contestId=2109,
         descText="TOP 5 - Overall",
         imageSelected=1,
+        regex=r"^(2023|2024|2022).{9}$",
         overrideContestName=False,
         overrideText="CODEFORCES Div. 2 Round 1025"
     )
@@ -28,7 +29,7 @@ if __name__ == "__main__":
 
     generator.generate()
     stop_spinner = True
-    
+
     t.join()
 
     print(f"\033[94mThe operation took {(time.time() - start):.2f} seconds\033[0m")
