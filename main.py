@@ -7,7 +7,8 @@ imageList = ["dark.png", "brown.png", "purple.png", "blue.png"]
 textColour = ["#dfdacb", "#ffe5c0", "#e4caf4", "#cbdcfd"]
 
 contestId = 2109
-regex = r"^(2023|2024).{9}$"
+regex = r"^(2023|2024|2022).{9}$"
+descText = "TOP 5 - Overall"
 imageSelected = 3
 
 imageSelected %=4
@@ -86,7 +87,7 @@ bold_font_path = "./fonts/Montserrat-Bold.ttf"
 title_bold_font = ImageFont.truetype(bold_font_path, 80)
 draw.text((width//2, 750), contestName.upper(), font=title_bold_font, fill=textColour[imageSelected], anchor="mm")
 
-draw.text((width//2, 950), "TOP 5 - 2023 Batch", font = title_font, fill = textColour[imageSelected], anchor="mm")
+draw.text((width//2, 950), descText, font = title_font, fill = textColour[imageSelected], anchor="mm")
 
 # Table start
 start_y = 1250
