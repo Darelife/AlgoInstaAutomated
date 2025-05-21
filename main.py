@@ -46,26 +46,26 @@ data = []
 if resp["status"] == "OK":
     for row in resp["result"]["rows"]:
         handle = row["party"]["members"][0]["handle"]
-        points = row["points"]
+        rank = row["rank"]
         name = cfid_to_name.get(handle, None)
         if name:
-            data.append([name, handle, points])
+            data.append([name, handle, rank])
 else:
     data = []
 
 # If not enough data, fill with sample data
-if len(data) < 5:
-    data += [
-        ["Alice", "alice_cf", 2100],
-        ["Bob", "bob_the_coder", 2500],
-        ["Charlie", "chaz123", 1800],
-        ["Diana", "didi_the_challenger_of_worlds", 2600],
-        ["Eve", "eve_hacks", 2400],
-        ["Franklin Longname", "frankie_the_l33t_programmer", 2300],
-    ][:5-len(data)]
+# if len(data) < 5:
+#     data += [
+#         ["Alice", "alice_cf", 2100],
+#         ["Bob", "bob_the_coder", 2500],
+#         ["Charlie", "chaz123", 1800],
+#         ["Diana", "didi_the_challenger_of_worlds", 2600],
+#         ["Eve", "eve_hacks", 2400],
+#         ["Franklin Longname", "frankie_the_l33t_programmer", 2300],
+#     ][:5-len(data)]
 
 # Sort top 5 by points descending
-top_5 = sorted(data, key=lambda x: x[2], reverse=True)[:5]
+top_5 = sorted([entry for entry in data if entry[2] != 0], key=lambda x: x[2])[:min(5, len(data))]
 
 # Utility to truncate strings > 20 characters
 def truncate(text):
@@ -99,7 +99,7 @@ x_name = 120
 x_handle = 700
 x_points = 1430
 
-for idx, (name, handle, points) in enumerate(reversed(top_5)):
+for idx, (name, handle, points) in enumerate(top_5):
     y = start_y + idx * gap
     name_trunc = truncate(name)
     handle_trunc = truncate(handle)
