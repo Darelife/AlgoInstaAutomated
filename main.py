@@ -99,7 +99,7 @@ x_name = 120
 x_handle = 700
 x_points = 1430
 
-for idx, (name, handle, points) in enumerate(top_5):
+for idx, (name, handle, points) in enumerate(reversed(top_5)):
     y = start_y + idx * gap
     name_trunc = truncate(name)
     handle_trunc = truncate(handle)
@@ -109,4 +109,4 @@ for idx, (name, handle, points) in enumerate(top_5):
     draw.text((x_points, y), f"{int(points)}", font=line_font, fill=textColour[imageSelected], anchor="ra")
 
 # Save and show
-background.save("top5_leftaligned_story.png")
+background.save(f"{descText}.png")
