@@ -10,3 +10,5 @@ imageSelected = 1
 overrideContestName = False
 overrideText = "CODEFORCES Div. 2 Round 1025"
 ```
+
+Run it using `python3 main.py`
