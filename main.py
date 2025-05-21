@@ -28,6 +28,8 @@ url = f"https://codeforces.com/api/contest.standings?contestId={contestId}&showU
 req = requests.get(url)
 resp = req.json()
 
+contestName = resp["result"]["contest"]["name"] if resp["status"] == "OK" else "Unknown Contest"
+
 # Map cfid to name for quick lookup
 cfid_to_name = {cfid: name for name, cfid in filtered_entries}
 
@@ -78,7 +80,7 @@ line_font = ImageFont.truetype(font_path, 50)
 # To make text bold, use a bold font variant
 bold_font_path = "./fonts/Montserrat-Bold.ttf"
 title_bold_font = ImageFont.truetype(bold_font_path, 80)
-draw.text((width//2, 750), "CODEFORCES DIV2 ROUND 953", font=title_bold_font, fill=textColour[imageSelected], anchor="mm")
+draw.text((width//2, 750), contestName.upper(), font=title_bold_font, fill=textColour[imageSelected], anchor="mm")
 
 draw.text((width//2, 950), "TOP 5 - 2023 Batch", font = title_font, fill = textColour[imageSelected], anchor="mm")
 
