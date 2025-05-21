@@ -4,12 +4,14 @@ import json
 import requests
 
 imageList = ["dark.png", "brown.png", "purple.png", "blue.png"]
-textColour = ["#dfdacb", "#ffe5c0", "#e4caf4", "#cbdcfd"]
+textColour = ["#e1e1de", "#ffe5c0", "#e4caf4", "#cbdcfd"]
 
 contestId = 2109
 regex = r"^(2023|2024|2022).{9}$"
 descText = "TOP 5 - Overall"
-imageSelected = 3
+imageSelected = 1
+overrideContestName = False
+overrideText = "CODEFORCES Div. 2 Round 1025"
 
 imageSelected %=4
 
@@ -34,6 +36,7 @@ req = requests.get(url)
 resp = req.json()
 
 contestName = resp["result"]["contest"]["name"] if resp["status"] == "OK" else "Unknown Contest"
+if (overrideContestName == True): contestName = overrideText
 
 # Map cfid to name for quick lookup
 cfid_to_name = {cfid: name for name, cfid in filtered_entries}
