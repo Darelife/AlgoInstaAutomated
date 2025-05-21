@@ -13,8 +13,12 @@ imageSelected = 3
 imageSelected %=4
 
 
-with open("database.json", "r") as f:
-    dataa = json.load(f)
+# with open("database.json", "r") as f:
+#     dataa = json.load(f)
+
+url = "https://algoxxx.onrender.com/database"
+req = requests.get(url)
+dataa = req.json()
 
 # [{"_id":"677f9c5e23c75525f713eb4a","name":"Guranurag Singh Tung","bitsid":"2023A7PS0412G","cfid":"woyeta","__v":0},{"_id":"677f9c5f23c75525f713eb4e","name":"Jayanth","bitsid":"2023A7PS0399G","cfid":"Jayanth_2006","__v":0},
 filtered_entries = [
