@@ -41,9 +41,9 @@ draw.text((width//2, 950), "TOP 5 - 2023 Batch", font = title_font, fill = "#cbd
 # Table start
 start_y = 1250
 gap = 100
-x_name = 130
+x_name = 120
 x_handle = 700
-x_points = 1420
+x_points = 1430
 
 for idx, (name, handle, points) in enumerate(top_5):
     y = start_y + idx * gap
