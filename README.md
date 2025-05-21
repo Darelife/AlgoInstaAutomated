@@ -16,6 +16,6 @@ generator = ContestImageGenerator(
 Run it using `python3 main.py`
 
 ### Docker
-To load the docker image, use `docker load -i contest-generator.tar`, and to run it do `docker run -it -v "$PWD/output:/app/output" algoinsta`
+To load the docker image, use `docker load -i algoinsta.tar`, and to run it do `docker run -it -v "$PWD/output:/app/output" algoinsta`
 
 ![ReadMeImage](ReadMeImage.png)
