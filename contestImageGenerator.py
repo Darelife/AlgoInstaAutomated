@@ -60,8 +60,8 @@ class ContestImageGenerator:
                     data.append([name, handle, rank])
         return data
 
-    def getTop5(self, data):
-        return sorted([entry for entry in data if entry[2] != 0], key=lambda x: x[2])[:min(5, len(data))]
+    def getTop6(self, data):
+        return sorted([entry for entry in data if entry[2] != 0], key=lambda x: x[2])[:min(6, len(data))]
 
     def truncate(self, text):
         return text if len(text) <= 17 else text[:14] + "..."
@@ -72,39 +72,39 @@ class ContestImageGenerator:
         self.draw = ImageDraw.Draw(self.background)
         fontPath = "./fonts/Montserrat-Light.ttf"
         boldFontPath = "./fonts/Montserrat-Bold.ttf"
-        self.titleFont = ImageFont.truetype(fontPath, 123)
-        self.lineFont = ImageFont.truetype(fontPath, 52)
-        self.titleBoldFont = ImageFont.truetype(boldFontPath, 80)
+        self.titleFont = ImageFont.truetype(fontPath, 80)
+        self.lineFont = ImageFont.truetype(fontPath, 40)
+        self.titleBoldFont = ImageFont.truetype(boldFontPath, 54)
 
     def drawTitle(self, contestName):
         self.draw.text(
-            (self.width // 2, 750),
+            (self.width // 2, 650),
             contestName.upper(),
             font=self.titleBoldFont,
             fill=self.textColour[self.imageSelected],
             anchor="mm"
         )
         self.draw.text(
-            (self.width // 2, 950),
+            (self.width // 2, 800),
             self.descText,
             font=self.titleFont,
             fill=self.textColour[self.imageSelected],
             anchor="mm"
         )
 
-    def drawTable(self, top5):
-        startY = 1250
-        gap = 110
-        xName = 120
-        xHandle = 700
-        xPoints = 1430
-        for idx, (name, handle, points) in enumerate(top5):
+    def drawTable(self, top6):
+        startY = 1150
+        gap = 95
+        xName = 75
+        xHandle = 475
+        xPoints = 925
+        for idx, (name, handle, points) in enumerate(top6):
             y = startY + idx * gap
             nameTrunc = self.truncate(name)
             handleTrunc = self.truncate(handle)
             self.draw.text((xName, y), f"{nameTrunc}", font=self.lineFont, fill=self.textColour[self.imageSelected])
             self.draw.text((xHandle, y), f"{handleTrunc}", font=self.lineFont, fill=self.textColour[self.imageSelected])
-            self.draw.text((xPoints, y), f"{int(points)}", font=self.lineFont, fill=self.textColour[self.imageSelected], anchor="ra")
+            self.draw.text((xPoints, y), f"{int(points)}", font=self.lineFont, fill=self.textColour[self.imageSelected])
 
     def saveImage(self):
         self.background.save(f"{self.descText}.png")
@@ -116,8 +116,8 @@ class ContestImageGenerator:
         contestName = self.getContestName(resp)
         cfidToName = self.mapCfidToName(filteredEntries)
         data = self.extractStandings(resp, cfidToName)
-        top5 = self.getTop5(data)
+        top6 = self.getTop6(data)
         self.setupImage()
         self.drawTitle(contestName)
-        self.drawTable(top5)
+        self.drawTable(top6)
         self.saveImage()
