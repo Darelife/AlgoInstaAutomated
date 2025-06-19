@@ -27,20 +27,20 @@ if __name__ == "__main__":
         console.print("[dim]This text will appear as the description on the contest image.[/]")
         desc_text = Prompt.ask(
             "[bold cyan]Enter description text[/]",
-            default="TOP 5 - Overall",
+            default="TOP 6 - Overall",
             console=console
         )
         print()
     elif (regex_years == "2024"):
-        desc_text = "TOP 5 - 2024 Batch"
+        desc_text = "TOP 6 - 2024 Batch"
     elif (regex_years == "2023"):
-        desc_text = "TOP 5 - 2023 Batch"
+        desc_text = "TOP 6 - 2023 Batch"
     elif (regex_years == "2022"):
-        desc_text = "TOP 5 - 2022 Batch"
+        desc_text = "TOP 6 - 2022 Batch"
     elif (regex_years == "2021"):
-        desc_text = "TOP 5 - 2021 Batch"
+        desc_text = "TOP 6 - 2021 Batch"
     elif (regex_years == "2022|2023|2024"):
-        desc_text = "TOP 5 - Overall"
+        desc_text = "TOP 6 - Overall"
 
     console.print("[dim]Choose which image template to use (enter a number, e.g., 1). [0 = Dark, 1 = Brown, 2 = Purple, 3 = Blue] [/]")
     image_selected = int(Prompt.ask(

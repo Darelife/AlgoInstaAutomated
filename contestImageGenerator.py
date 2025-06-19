@@ -93,8 +93,8 @@ class ContestImageGenerator:
         )
 
     def drawTable(self, top6):
-        startY = 1150
-        gap = 95
+        startY = 1125
+        gap = 97
         xName = 75
         xHandle = 475
         xPoints = 925
