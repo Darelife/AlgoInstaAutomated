@@ -253,7 +253,7 @@ class ContestGraphImageGenerator:
         )
 
     def drawTable(self, top5):
-        startY = 1050
+        startY = 1035
         gap = 90
         xName = 70
         xHandle = 485
