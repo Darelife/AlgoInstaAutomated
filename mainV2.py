@@ -1,22 +1,19 @@
-from contestImageGenerator import ContestImageGenerator
+from contestImageGenerator_V2 import ContestImageGeneratorV2
 from rich.prompt import Prompt
 from rich.console import Console
 import time
 import threading
 import sys
 import argparse
+
 def parse_args():
-    parser = argparse.ArgumentParser(description="Generate contest image.")
+    parser = argparse.ArgumentParser(description="Generate XKCD-style contest image for Instagram story.")
     parser.add_argument("--contest-id", type=int, help="Unique numeric ID of the contest (e.g., 1234)")
     parser.add_argument("--regex-years", type=str, help="Regex to filter years (e.g., 2022|2023|2024)")
     parser.add_argument("--desc-text", type=str, help="Description text for the contest image")
-    parser.add_argument("--image-selected", type=int, choices=[0, 1, 2, 3], help="Image template: 0=Dark, 1=Brown, 2=Purple, 3=Blue")
     parser.add_argument("--override-contest-name", action="store_true", help="Override contest name on the image")
     parser.add_argument("--override-text", type=str, help="Text to replace contest name on the image")
     return parser.parse_args()
-
-# Example command to run this script with all arguments:
-# python main.py --contest-id 1234 --regex-years "2022|2023|2024" --desc-text "TOP 5 - Overall" --image-selected 1 --override-contest-name --override-text "Custom Contest Name"
 
 if __name__ == "__main__":
     args = parse_args()
@@ -65,17 +62,6 @@ if __name__ == "__main__":
     elif (regex_years == "2022|2023|2024"):
         desc_text = "TOP 6 - Overall"
 
-    if args.image_selected is None:
-        console.print("[dim]Choose which image template to use (enter a number, e.g., 1). [0 = Dark, 1 = Brown, 2 = Purple, 3 = Blue] [/]")
-        image_selected = int(Prompt.ask(
-            "[bold cyan]Enter image selected (number)[/]",
-            default="1",
-            console=console
-        ))
-        print()
-    else:
-        image_selected = args.image_selected
-
     if args.override_contest_name:
         override_contest_name = True
     else:
@@ -102,17 +88,16 @@ if __name__ == "__main__":
 
     regex = rf"^({regex_years}).{{9}}$"
 
-    console.print("[green]Generating contest image with the following parameters:[/]")
+    console.print("[green]Generating XKCD-style contest image with the following parameters:[/]")
     console.print(f"contestId: {contest_id}")
     console.print(f"descText: {desc_text}")
-    console.print(f"imageSelected: {image_selected}")
     console.print(f"regex: {regex}")
     console.print(f"overrideContestName: {override_contest_name}")
     console.print(f"overrideText: {override_text if override_contest_name else 'N/A'}")
-    generator = ContestImageGenerator(
+
+    generator = ContestImageGeneratorV2(
         contestId=contest_id,
         descText=desc_text,
-        imageSelected=image_selected,
         regex=regex,
         overrideContestName=override_contest_name,
         overrideText=override_text
@@ -132,10 +117,9 @@ if __name__ == "__main__":
     t = threading.Thread(target=spinner)
     t.start()
 
-
     generator.generate()
 
     stop_spinner = True
     t.join()
 
-    print(f"\033[94mThe operation took {(time.time() - start):.2f} seconds\033[0m")
+    print(f"\033[94mThe operation took {(time.time() - start):.2f} seconds\033[0m") 

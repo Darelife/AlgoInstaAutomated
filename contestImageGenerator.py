@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import re
 import requests
+import json
 
 class ContestImageGenerator:
     def __init__(self, contestId, descText, imageSelected, regex=r"^(2023|2024|2022).{9}$", overrideContestName=False, overrideText=""):
@@ -23,11 +24,13 @@ class ContestImageGenerator:
     def fetchDatabase(self):
         url = "https://algoxxx.onrender.com/database"
         req = requests.get(url)
-        return req.json()
+        data = req.json()
+        data.append({"_id":"123","name":"Meet Parmar","bitsid":"2023A7PS0406G","cfid":"meeeet"})
+        return data
 
     def filterEntries(self, dataa):
         return [
-            [entry.get("name", ""), entry.get("cfid", "")]
+            [entry.get("name", "").title(), entry.get("cfid", "").lower()]
             for entry in dataa
             if re.search(self.regex, entry.get("bitsid", ""))
         ]
@@ -35,6 +38,8 @@ class ContestImageGenerator:
     def fetchContestStandings(self):
         url = f"https://codeforces.com/api/contest.standings?contestId={self.contestId}&showUnofficial=true"
         req = requests.get(url)
+        if req.status_code != 200:
+            raise Exception(f"Failed to fetch contest standings: {req.status_code}")
         return req.json()
 
     def getContestName(self, resp):
@@ -53,11 +58,13 @@ class ContestImageGenerator:
         data = []
         if resp["status"] == "OK":
             for row in resp["result"]["rows"]:
-                handle = row["party"]["members"][0]["handle"]
+                handle = row["party"]["members"][0]["handle"].lower()
                 rank = row["rank"]
                 name = cfidToName.get(handle, None)
                 if name:
                     data.append([name, handle, rank])
+        with open("t.json", "w") as f:
+            json.dump(data, f, indent=2);
         return data
 
     def getTop6(self, data):
@@ -72,33 +79,33 @@ class ContestImageGenerator:
         self.draw = ImageDraw.Draw(self.background)
         fontPath = "./fonts/Montserrat-Light.ttf"
         boldFontPath = "./fonts/Montserrat-Bold.ttf"
-        self.titleFont = ImageFont.truetype(fontPath, 80)
-        self.lineFont = ImageFont.truetype(fontPath, 40)
-        self.titleBoldFont = ImageFont.truetype(boldFontPath, 54)
+        self.titleFont = ImageFont.truetype(fontPath, 123)
+        self.lineFont = ImageFont.truetype(fontPath, 52)
+        self.titleBoldFont = ImageFont.truetype(boldFontPath, 80)
 
     def drawTitle(self, contestName):
         self.draw.text(
-            (self.width // 2, 650),
+            (self.width // 2, 750),
             contestName.upper(),
             font=self.titleBoldFont,
             fill=self.textColour[self.imageSelected],
             anchor="mm"
         )
         self.draw.text(
-            (self.width // 2, 800),
+            (self.width // 2, 950),
             self.descText,
             font=self.titleFont,
             fill=self.textColour[self.imageSelected],
             anchor="mm"
         )
 
-    def drawTable(self, top6):
-        startY = 1125
-        gap = 97
-        xName = 75
-        xHandle = 475
-        xPoints = 925
-        for idx, (name, handle, points) in enumerate(top6):
+    def drawTable(self, top5):
+        startY = 1250
+        gap = 110
+        xName = 120
+        xHandle = 700
+        xPoints = 1430
+        for idx, (name, handle, points) in enumerate(top5):
             y = startY + idx * gap
             nameTrunc = self.truncate(name)
             handleTrunc = self.truncate(handle)
